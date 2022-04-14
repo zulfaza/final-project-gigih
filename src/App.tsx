@@ -1,24 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import CreatePlaylist from "pages/CreatePlaylist";
+import Login from "pages/Login";
+import Error404 from "pages/Error404";
+import UserOnlyRoute from "components/routes/UserOnlyRoute";
+import GuestOnlyRoute from "components/routes/GuestOnlyRoute";
+
+import { updateAccessToken } from "core/redux/slice";
+import { useDispatch } from "react-redux";
+import getQueryParams from "utils/getQueryParams";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const { access_token = null } = getQueryParams(window.location.hash);
+    if (access_token) dispatch(updateAccessToken(access_token));
+  }, [dispatch]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <UserOnlyRoute path="/create-playlist" component={CreatePlaylist} />
+          <GuestOnlyRoute exact path="/" component={Login} />
+          <Route path="*" component={Error404} />
+        </Switch>
+      </Router>
     </div>
   );
 }
