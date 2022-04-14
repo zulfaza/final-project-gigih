@@ -1,6 +1,6 @@
-interface FinalObjectType {
+export type FinalObjectType = {
   [key: string]: string;
-}
+};
 
 function getQueryParams(string: string): FinalObjectType {
   const queries = string.substring(1).split("&");

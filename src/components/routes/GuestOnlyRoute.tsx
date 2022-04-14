@@ -1,31 +1,21 @@
 import React from "react";
 import { selectorProps } from "core/redux/store";
 import { useSelector } from "react-redux";
-import { Redirect, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-interface Props {
-  component: any;
+type Props = {
+  children: JSX.Element;
   [key: string]: any;
-}
+};
 
-export default function GuestOnlyRoute({
-  component: Component,
-  ...rest
-}: Props) {
+function GuestOnlyRoute({ children }: Props) {
   const accessToken = useSelector<selectorProps>(
     (state) => state.spotify.accessToken
   );
 
-  return (
-    <Route
-      {...rest}
-      render={(props) => {
-        return accessToken ? (
-          <Redirect to={"/create-playlist"} />
-        ) : (
-          <Component {...props} />
-        );
-      }}
-    ></Route>
-  );
+  if (accessToken) return <Navigate to="/create-playlist" />;
+
+  return children;
 }
+
+export default GuestOnlyRoute;

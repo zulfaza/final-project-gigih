@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import SpotifyReducer, { reducerState } from "./slice";
 
-export interface selectorProps {
+export type selectorProps = {
   spotify: reducerState;
-}
+};
 
 export default configureStore({
   reducer: {
