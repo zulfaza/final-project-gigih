@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { selectorProps } from 'core/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { deleteAccessToken, updateAccessToken } from 'core/redux/slice';
+import { deleteAccessToken, updateAccessToken } from 'core/redux/spotify';
 
 type Props = {
   children: JSX.Element;

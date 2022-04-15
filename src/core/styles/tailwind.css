@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -87,7 +87,7 @@
 
   html,
   body {
-    @apply m-0 p-0 font-main;
+    @apply m-0 p-0 font-main bg-dark;
     scroll-behavior: smooth;
   }
 
@@ -100,5 +100,19 @@
   textarea,
   select {
     @apply focus:outline-none;
+  }
+}
+
+@layer components {
+  .slider {
+    @apply appearance-none w-full h-1 bg-white outline-none bg-opacity-40 hover:bg-opacity-70 transition-colors;
+  }
+
+  .slider::-webkit-slider-thumb {
+    @apply appearance-none w-4 h-4 cursor-pointer bg-accent rounded-full;
+  }
+
+  .slider::-moz-range-thumb {
+    @apply w-4 h-4 cursor-pointer bg-accent rounded-full;
   }
 }

@@ -1,7 +1,7 @@
-import React from "react";
-import { selectorProps } from "core/redux/store";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import React from 'react';
+import { selectorProps } from 'core/redux/store';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 type Props = {
   children: JSX.Element;
@@ -9,8 +9,8 @@ type Props = {
 };
 
 function GuestOnlyRoute({ children }: Props) {
-  const accessToken = useSelector<selectorProps>(
-    (state) => state.spotify.accessToken
+  const accessToken = useSelector(
+    (state: selectorProps) => state.spotify.accessToken
   );
 
   if (accessToken) return <Navigate to="/create-playlist" />;

@@ -3,7 +3,7 @@ import formatParameter from 'utils/formatParameter';
 import {
   deleteAccessToken,
   updateAccessTokenAndStorage,
-} from 'core/redux/slice';
+} from 'core/redux/spotify';
 import { useDispatch, useSelector } from 'react-redux';
 import getQueryParams from 'utils/getQueryParams';
 import Lottie from 'components/lottie';
@@ -68,18 +68,18 @@ const Login = () => {
   const redirect_uri = process.env.REACT_APP_REDIRECT_URL;
 
   return (
-    <div className="w-full h-screen bg-gray-900">
+    <div className="w-full h-screen">
       <div className="container h-full flex-cc mx-auto">
         <div className="flex flex-grow justify-center px-6 my-12">
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
-            <div
-              className="w-full min-h-[525px] h-full bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"
-              style={{
-                backgroundImage:
-                  "url('https://source.unsplash.com/QzpgqElvSiA/600x800'",
-              }}
-            ></div>
-            <div className="w-full lg:w-1/2 text-gray-200 bg-gray-700 p-5 rounded-lg lg:rounded-l-none">
+            <div className="w-full min-h-[525px] h-full bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg">
+              <img
+                className="w-full h-full"
+                src="https://source.unsplash.com/QzpgqElvSiA/600x800"
+                alt="music"
+              />
+            </div>
+            <div className="w-full lg:w-1/2 text-gray-200 bg-dark-600 p-5 rounded-lg lg:rounded-l-none">
               <form className="px-8 flex-cc flex-col h-full pt-6 pb-8 mb-4 rounded">
                 <div className="w-full">
                   {errors.length > 0 && (
