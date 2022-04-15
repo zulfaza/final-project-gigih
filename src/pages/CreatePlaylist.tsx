@@ -101,6 +101,21 @@ const CreatePlaylist = () => {
           </button>
         </div>
         <div>{Error && <div className="w-full">{Error}</div>}</div>
+        <div>
+          {LoadingTrack && Keyword && (
+            <div className="flex-cc">
+              <ImSpinner8 className="animate-spin w-10 h-10 text-white" />{' '}
+            </div>
+          )}
+        </div>
+        <div>
+          {!LoadingTrack && Keyword && Tracks.length < 1 && (
+            <div className="w-full flex-cc flex-col">
+              <Lottie className="w-72" animation={sadFace} />
+              <h3 className="text-white font-semibold  text-2xl">Not Found</h3>
+            </div>
+          )}
+        </div>
         {DefaultTracks.length > 0 && Tracks.length < 1 && (
           <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-10">
             {DefaultTracks.map((track) => (
@@ -121,21 +136,6 @@ const CreatePlaylist = () => {
                 <TrackItem track={track} />
               </div>
             )
-          )}
-        </div>
-        <div>
-          {LoadingTrack && Keyword && (
-            <div className="flex-cc">
-              <ImSpinner8 className="animate-spin w-10 h-10 text-white" />{' '}
-            </div>
-          )}
-        </div>
-        <div>
-          {!LoadingTrack && Keyword && Tracks.length < 1 && (
-            <div className="w-full flex-cc flex-col">
-              <Lottie className="w-72" animation={sadFace} />
-              <h3 className="text-white font-semibold  text-2xl">Not Found</h3>
-            </div>
           )}
         </div>
       </>
