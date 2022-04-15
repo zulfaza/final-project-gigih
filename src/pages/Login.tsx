@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
 import formatParameter from 'utils/formatParameter';
-import { deleteAccessToken, updateAccessToken } from 'core/redux/slice';
-import { useDispatch } from 'react-redux';
+import {
+  deleteAccessToken,
+  updateAccessTokenAndStorage,
+} from 'core/redux/slice';
+import { useDispatch, useSelector } from 'react-redux';
 import getQueryParams from 'utils/getQueryParams';
 import Lottie from 'components/lottie';
 import music from 'components/lottie/animations/sound-equalizer-bars-music.json';
+import { BsSpotify } from 'react-icons/bs';
+import { selectorProps } from 'core/redux/store';
 
 export type QueryType = {
   access_token: string;
@@ -15,23 +20,20 @@ export type QueryType = {
 
 const Login = () => {
   const dispatch = useDispatch();
+  const errors = useSelector((state: selectorProps) => state.spotify.errors);
 
   useEffect(() => {
     function checkAccessTokenFromSpotify() {
       const data = getQueryParams(window.location.hash);
-
       if (data.access_token) {
         const lastLoginInSeconds = new Date().getTime() / 1000 - 60;
         const dataToSave = {
           ...data,
           last_login: lastLoginInSeconds.toString(),
         } as QueryType;
-
-        dispatch(updateAccessToken(dataToSave));
-
+        dispatch(updateAccessTokenAndStorage(dataToSave));
         return true;
       }
-
       return false;
     }
 
@@ -44,10 +46,10 @@ const Login = () => {
       const nowInSeconds = new Date().getTime() / 1000;
       if (lastLoginInt && expireInInt && accessToken) {
         if (nowInSeconds > lastLoginInt + expireInInt) {
-          dispatch(deleteAccessToken());
+          dispatch(deleteAccessToken({}));
         } else {
           dispatch(
-            updateAccessToken({
+            updateAccessTokenAndStorage({
               access_token: accessToken,
               expires_in: expireInInt.toString(),
               last_login: lastLoginInt.toString(),
@@ -60,10 +62,10 @@ const Login = () => {
     if (!checkAccessTokenFromSpotify()) CheckAccessTokenFromLocalStorage();
   }, [dispatch]);
 
-  const client_id = '1b916095a0c1419bb00bb1707d87ae5b';
+  const client_id = process.env.REACT_APP_CLIENT_ID;
   const scope =
     'playlist-modify-private  user-read-private  user-read-email  streaming';
-  const redirect_uri = 'http://localhost:3000';
+  const redirect_uri = process.env.REACT_APP_REDIRECT_URL;
 
   return (
     <div className="w-full h-screen bg-gray-900">
@@ -79,13 +81,20 @@ const Login = () => {
             ></div>
             <div className="w-full lg:w-1/2 text-gray-200 bg-gray-700 p-5 rounded-lg lg:rounded-l-none">
               <form className="px-8 flex-cc flex-col h-full pt-6 pb-8 mb-4 rounded">
+                <div className="w-full">
+                  {errors.length > 0 && (
+                    <div className="bg-red-500 text-center py-3 w-full rounded-lg">
+                      {errors.join('')}
+                    </div>
+                  )}
+                </div>
                 <Lottie animation={music} />
                 <h3 className="pt-4 text-2xl mb-8 text-white text-center">
                   Welcome Back!
                 </h3>
                 <div className="mb-6 w-full flex-cc">
                   <a
-                    className="w-full block text-center md:w-4/5 px-4 py-2 font-bold text-white bg-green-500 rounded-full hover:rounded-2xl transition-all hover:bg-green-600 focus:outline-none focus:shadow-outline"
+                    className="w-full flex-cc text-center md:w-4/5 px-4 py-2 font-bold text-white bg-green-500 rounded-full hover:rounded-2xl transition-all hover:bg-green-600 focus:outline-none focus:shadow-outline"
                     href={`https://accounts.spotify.com/authorize?${formatParameter(
                       {
                         response_type: 'token',
@@ -95,7 +104,7 @@ const Login = () => {
                       }
                     )}`}
                   >
-                    Sign In
+                    <BsSpotify className="mr-3 w-4 h-4" /> Sign in with Spotify
                   </a>
                 </div>
               </form>

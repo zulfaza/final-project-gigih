@@ -11,7 +11,7 @@ const initialState: reducerState = {
   errors: [],
 };
 
-const _updateAccessToken: CaseReducer<
+const _updateAccessTokenAndStorage: CaseReducer<
   reducerState,
   PayloadAction<QueryType>
 > = (state, action) => {
@@ -25,22 +25,44 @@ const _updateAccessToken: CaseReducer<
   return newState;
 };
 
+const _updateAccessToken: CaseReducer<reducerState, PayloadAction<string>> = (
+  state,
+  action
+) => ({ ...state, accessToken: action.payload });
+
+type deleteAccessTokenPayloadType = {
+  errors?: string[];
+};
+const _deleteAccessToken: CaseReducer<
+  reducerState,
+  PayloadAction<deleteAccessTokenPayloadType>
+> = (state, action) => {
+  const { errors = [] } = action.payload;
+  const newState = {
+    ...state,
+    accessToken: null,
+    errors: errors,
+  };
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('expiresIn');
+  localStorage.removeItem('lastLogin');
+  return newState;
+};
+
 export const inputSlice = createSlice({
   name: 'spotify',
   initialState,
   reducers: {
+    updateAccessTokenAndStorage: _updateAccessTokenAndStorage,
     updateAccessToken: _updateAccessToken,
-    deleteAccessToken: (state) => {
-      const newState = { ...state };
-      newState.accessToken = null;
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('expiresIn');
-      localStorage.removeItem('lastLogin');
-      return newState;
-    },
+    deleteAccessToken: _deleteAccessToken,
   },
 });
 
-export const { updateAccessToken, deleteAccessToken } = inputSlice.actions;
+export const {
+  updateAccessTokenAndStorage,
+  deleteAccessToken,
+  updateAccessToken,
+} = inputSlice.actions;
 
 export default inputSlice.reducer;
