@@ -86,7 +86,7 @@ const CreatePlaylist = () => {
           {!LoadingTrack && Keyword && Tracks.length < 1 && (
             <div className="w-full flex-cc flex-col">
               <Lottie className="w-72" animation={sadFace} />
-              <h3 className="text-white font-semibold text-2xl">Not Found</h3>
+              <h3 className="text-white font-semibold  text-2xl">Not Found</h3>
             </div>
           )}
         </div>

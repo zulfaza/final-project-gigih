@@ -18,7 +18,7 @@ export type Props = {
 
 const Navbar = ({ userNavigation }: Props) => {
   return (
-    <nav className=" bg-dark sticky top-0 border-b border-white border-opacity-10">
+    <nav className=" bg-dark sticky z-50 top-0 border-b border-white border-opacity-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-end h-16">
           <div className="">

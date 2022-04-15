@@ -3,6 +3,7 @@ import { sound } from 'components/lottie/animations';
 import { FormatedTrack } from 'core/hooks/useTrackSearch';
 import React, { useEffect, useRef, useState } from 'react';
 import { BsPlayCircle, BsPlusCircle, BsStopCircle } from 'react-icons/bs';
+import { ImSpinner8 } from 'react-icons/im';
 import { msToFormatedDuration } from 'utils/converter';
 import VolumeControl from './VolumeControl';
 
@@ -14,11 +15,21 @@ const TrackItem = ({ track }: Props) => {
   const AudioRef = useRef<HTMLAudioElement | null>(null);
   const [IsPlay, setIsPlay] = useState(false);
   const [Volume, setVolume] = useState(0.3);
+  const [Loading, setLoading] = useState(true);
 
   useEffect(() => {
     const onEnded = (e: Event) => {
       setIsPlay(false);
     };
+
+    const onLoaded = (e: Event) => {
+      setLoading(false);
+    };
+
+    const onWaiting = (e: Event) => {
+      setLoading(true);
+    };
+
     const onPlay = (e: Event) => {
       setIsPlay(true);
     };
@@ -33,12 +44,16 @@ const TrackItem = ({ track }: Props) => {
       tempRef.addEventListener('ended', onEnded);
       tempRef.addEventListener('play', onPlay);
       tempRef.addEventListener('pause', onPause);
+      tempRef.addEventListener('loadeddata', onLoaded);
+      tempRef.addEventListener('waiting', onWaiting);
     }
     return () => {
       if (tempRef) {
         tempRef.removeEventListener('ended', onEnded);
         tempRef.removeEventListener('play', onPlay);
         tempRef.removeEventListener('pause', onPause);
+        tempRef.removeEventListener('loadeddata', onLoaded);
+        tempRef.removeEventListener('waiting', onWaiting);
       }
     };
   }, [Volume, AudioRef]);
@@ -53,7 +68,7 @@ const TrackItem = ({ track }: Props) => {
   return (
     <div className="flex h-full flex-col p-5 group rounded-xl hover:bg-dark-600 hover:bg-opacity-70 transition-colors bg-dark-700 ">
       <audio src={track.preview} ref={AudioRef}></audio>
-      <div className="relative rounded-2xl overflow-hidden">
+      <div className="relative z-0 rounded-2xl overflow-hidden">
         <img
           className="overflow-hidden"
           src={track.thumbnail}
@@ -77,30 +92,39 @@ const TrackItem = ({ track }: Props) => {
       <div className="-mt-10 ml-1">
         <VolumeControl setVolume={setVolume} Volume={Volume} />
       </div>
-      <h3 className="text-white flex-sc font-bold truncate mt-3 mb-2">
-        {track.title}
-        {IsPlay ? (
-          <Lottie className="w-10 h-10" animation={sound} />
-        ) : (
-          <div className="w-10 h-10"></div>
-        )}
-      </h3>
+      <div className="flex-sc">
+        <h3 className="text-white font-bold truncate mt-3 mb-2">
+          <span>{track.title}</span>
+        </h3>
+        <div className="w-10 h-10 flex-grow">
+          {IsPlay &&
+            (Loading ? (
+              <div className="flex-cc w-10 h-10">
+                <ImSpinner8 className="animate-spin ml-2 w-4 h-4 text-white" />
+              </div>
+            ) : (
+              <Lottie className="w-10 h-10 " animation={sound} />
+            ))}
+        </div>
+      </div>
       <div className="flex flex-wrap">
-        {track.artists.map((artist, index, array) => (
-          <span key={artist.id}>
-            <a
-              className="text-dark-300 text-opacity-50 hover:text-opacity-80 transition-colors"
-              href={artist.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {artist.name}
-            </a>
-            {index !== array.length - 1 && (
-              <span className="text-dark-300 text-opacity-50 mr-1">,</span>
-            )}
-          </span>
-        ))}
+        {track.artists
+          .filter((_, index) => index < 3)
+          .map((artist, index, array) => (
+            <span key={artist.id}>
+              <a
+                className="text-dark-300 text-opacity-50 hover:text-opacity-80 transition-colors"
+                href={artist.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {artist.name}
+              </a>
+              {index !== array.length - 1 && (
+                <span className="text-dark-300 text-opacity-50 mr-1">,</span>
+              )}
+            </span>
+          ))}
       </div>
       <h5 className="text-white text-opacity-25 text-sm">
         {msToFormatedDuration(track.duration)}

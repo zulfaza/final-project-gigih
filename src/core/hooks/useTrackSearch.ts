@@ -126,7 +126,7 @@ const useTrackSearch = (
         .then((res) => {
           if (res.data.tracks) {
             const data: TracksData = res.data.tracks;
-            console.log(data);
+            // console.log(data);
             setTotalTracks(data.total);
             setHasMore(data.next !== null);
             setTracks((prevTrack) => [
