@@ -105,14 +105,14 @@
 
 @layer components {
   .slider {
-    @apply appearance-none w-full h-1 bg-white outline-none bg-opacity-40 hover:bg-opacity-70 transition-colors;
+    @apply appearance-none w-full h-1 bg-accent outline-none bg-opacity-40 hover:bg-opacity-70 transition-colors;
   }
 
   .slider::-webkit-slider-thumb {
-    @apply appearance-none w-4 h-4 cursor-pointer bg-accent rounded-full;
+    @apply appearance-none w-4 h-4 cursor-pointer bg-white rounded-full;
   }
 
   .slider::-moz-range-thumb {
-    @apply w-4 h-4 cursor-pointer bg-accent rounded-full;
+    @apply w-4 h-4 cursor-pointer bg-white rounded-full;
   }
 }
