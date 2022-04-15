@@ -12,5 +12,5 @@ export default configureStore({
     spotify: SpotifyReducer,
     ui: UIReducer,
   },
-  //   devTools: true,
+  devTools: true,
 });

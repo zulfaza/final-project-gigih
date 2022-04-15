@@ -2,13 +2,16 @@ import Lottie from 'components/lottie';
 import { sadFace } from 'components/lottie/animations';
 import TrackItem from 'components/TrackItem';
 import useTrackSearch from 'core/hooks/useTrackSearch';
+import { updateSelectedSongFromLocalStorage } from 'core/redux/spotify';
 import DashboardLayout from 'layouts/Dashboard';
 import { debounce } from 'lodash';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { ImSpinner8 } from 'react-icons/im';
+import { useDispatch } from 'react-redux';
 
 const CreatePlaylist = () => {
+  const dispatch = useDispatch();
   const [Keyword, setKeyword] = useState<string | null>('');
   const [Offset, setOffset] = useState(0);
   const [Tracks, HasMore, LoadingTrack, Error] = useTrackSearch(
@@ -31,6 +34,10 @@ const CreatePlaylist = () => {
     },
     [HasMore, LoadingTrack]
   );
+
+  useEffect(() => {
+    dispatch(updateSelectedSongFromLocalStorage());
+  }, [dispatch]);
 
   const setKeywordWithDebounce = useRef(
     debounce((keyword: string | null) => {

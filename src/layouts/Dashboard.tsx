@@ -1,17 +1,12 @@
 import Navbar from 'components/navbar';
+import { userNavigationType } from 'components/navbar/navbar';
 import Sidebar from 'components/Sidebar/Sidebar';
+import { deleteAccessToken } from 'core/redux/spotify';
 import { selectorProps } from 'core/redux/store';
 import { toggleShowSidebar } from 'core/redux/ui';
 import React from 'react';
 import { BsX } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-
-const navigation = [{ name: 'Dashboard', href: '/create-playlist' }];
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-];
 
 type Props = {
   children: JSX.Element | string;
@@ -21,6 +16,9 @@ const DashboardLayout = ({ children }: Props) => {
   const isOpen = useSelector((state: selectorProps) => state.ui.showSidebar);
   const dispatch = useDispatch();
   const handleOnClose = () => dispatch(toggleShowSidebar());
+  const userNavigation: userNavigationType[] = [
+    { name: 'Sign out', onClick: () => dispatch(deleteAccessToken({})) },
+  ];
   return (
     <>
       <div className="min-h-screen flex flex-col">
@@ -40,7 +38,7 @@ const DashboardLayout = ({ children }: Props) => {
             </div>
           </div>
           <div className="col-span-8 ">
-            <Navbar navigation={navigation} userNavigation={userNavigation} />
+            <Navbar userNavigation={userNavigation} />
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
               <div className="px-4 py-6 sm:px-0">{children}</div>
             </div>

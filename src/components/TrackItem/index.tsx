@@ -2,9 +2,10 @@ import Lottie from 'components/lottie';
 import { sound } from 'components/lottie/animations';
 import { FormatedTrack } from 'core/hooks/useTrackSearch';
 import React, { useEffect, useRef, useState } from 'react';
-import { BsPlayCircle, BsPlusCircle, BsStopCircle } from 'react-icons/bs';
+import { BsPlayCircle, BsStopCircle } from 'react-icons/bs';
 import { ImSpinner8 } from 'react-icons/im';
 import { msToFormatedDuration } from 'utils/converter';
+import ButtonPlaylist from './ButtonPlaylist';
 import VolumeControl from './VolumeControl';
 
 type Props = {
@@ -83,9 +84,7 @@ const TrackItem = ({ track }: Props) => {
                 <BsPlayCircle className="w-10 h-10" />
               )}
             </button>
-            <button className="text-white">
-              <BsPlusCircle className="w-10 h-10 ml-[2px]" />
-            </button>
+            <ButtonPlaylist track={track} />
           </div>
         </div>
       </div>

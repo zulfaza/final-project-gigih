@@ -3,17 +3,13 @@ import ProfileDropdown from './ProfileDropdown';
 import PlaylistCartButton from './PlaylistCartButton';
 import MobileMenuButton from './MobileMenuButton';
 
-type LinkType = {
+export type userNavigationType = {
   name: string;
-  href: string;
+  onClick: (arg0: any) => void;
 };
 
 export type Props = {
-  navigation: LinkType[];
-  userNavigation: {
-    name: string;
-    href: string;
-  }[];
+  userNavigation: userNavigationType[];
 };
 
 const Navbar = ({ userNavigation }: Props) => {

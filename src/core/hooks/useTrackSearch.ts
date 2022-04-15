@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { handleSearchTrack } from 'components/Api';
+import { handleSearchTrack } from 'core/spotify/request';
 import { useEffect, useState } from 'react';
 
 export interface TracksData {
