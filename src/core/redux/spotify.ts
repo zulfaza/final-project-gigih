@@ -117,6 +117,14 @@ export const inputSlice = createSlice({
         newState.selectedSongs = JSON.parse(arrSelectedSongStr);
       return newState;
     },
+    resetSelectedSongs: (state) => {
+      const newState = { ...state, selectedSongs: [] };
+      localStorage.setItem(
+        'selectedSong',
+        JSON.stringify(newState.selectedSongs)
+      );
+      return newState;
+    },
   },
 });
 
@@ -126,6 +134,7 @@ export const {
   deleteAccessToken,
   updateAccessToken,
   toggleSelectedSong,
+  resetSelectedSongs,
   updateUser,
 } = inputSlice.actions;
 
