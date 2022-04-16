@@ -48,7 +48,7 @@ const CreatePlaylist = () => {
   useEffect(() => {
     getSavedTrack()
       .then((res) => {
-        console.log(res);
+        if (res.data.items.length < 1) return Promise.resolve(null);
 
         return getTracks(
           res.data.items
@@ -56,23 +56,25 @@ const CreatePlaylist = () => {
             .join(',')
         );
       })
-      .then((res) =>
-        setDefaultTracks([
-          ...res.data.tracks.map((track: Track) => ({
-            title: track.name,
-            thumbnail:
-              track.album.images[0].url ??
-              `https://avatars.dicebear.com/api/identicon/${track.id}.svg`,
-            duration: track.duration_ms,
-            preview: track.preview_url,
-            uri: track.uri,
-            artists: track.artists.map((artist: Artist) => ({
-              name: artist.name,
-              id: artist.id,
-              url: artist.external_urls.spotify,
+      .then(
+        (res) =>
+          res &&
+          setDefaultTracks([
+            ...res.data.tracks.map((track: Track) => ({
+              title: track.name,
+              thumbnail:
+                track.album.images[0].url ??
+                `https://avatars.dicebear.com/api/identicon/${track.id}.svg`,
+              duration: track.duration_ms,
+              preview: track.preview_url,
+              uri: track.uri,
+              artists: track.artists.map((artist: Artist) => ({
+                name: artist.name,
+                id: artist.id,
+                url: artist.external_urls.spotify,
+              })),
             })),
-          })),
-        ])
+          ])
       )
       .catch((err) => {
         console.log(err.response.data);
@@ -124,7 +126,7 @@ const CreatePlaylist = () => {
             </div>
           )}
         </div>
-        {DefaultTracks.length > 0 && Tracks.length < 1 && (
+        {DefaultTracks.length > 0 && !Keyword && Tracks.length < 1 && (
           <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-10">
             {DefaultTracks.map((track) => (
               <div key={track.uri}>
