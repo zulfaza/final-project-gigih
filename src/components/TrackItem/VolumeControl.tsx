@@ -26,7 +26,7 @@ const VolumeControl = ({ Volume, setVolume }: Props) => {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="bg-black bg-opacity-60 py-1 px-3 rounded-2xl absolute transform -translate-x-16 left-1 -translate-y-24 -rotate-90">
+        <div className="bg-black bg-opacity-60 py-1 px-3 rounded-2xl absolute transform -translate-x-16 left-3 -translate-y-24 -rotate-90">
           <input
             onChange={(e) => setVolume(parseFloat(e.target.value))}
             className="slider w-28 transform -translate-y-1"

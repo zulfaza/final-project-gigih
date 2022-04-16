@@ -26,7 +26,7 @@ const DashboardLayout = ({ children }: Props) => {
           <div
             className={` absolute transform ${
               isOpen ? 'translate-x-0' : '-translate-x-full'
-            } transition-transform md:translate-x-0 md:sticky top-0 col-span-2 w-full h-screen bg-dark-800 z-500`}
+            } transition-transform md:translate-x-0 md:sticky top-0 col-span-2 w-full h-screen bg-dark-800 z-50`}
           >
             <div className="flex relative flex-col h-full">
               <div className=" absolute md:hidden right-0 p-4">

@@ -5,9 +5,16 @@ import { randonString } from 'utils/make';
 const Lottie = ({
   animation,
   className = '',
+  settings = {
+    loop: true,
+  },
 }: {
   animation: any;
   className?: string;
+  settings?: {
+    loop?: boolean | number;
+    autoplay?: boolean;
+  };
 }) => {
   const containerRef = useRef(null);
   useEffect(() => {
@@ -16,13 +23,13 @@ const Lottie = ({
       lottie.loadAnimation({
         container: containerRef.current,
         renderer: 'svg',
-        loop: true,
         animationData: animation,
         name,
+        ...settings,
       });
     }
     return () => lottie.destroy(name);
-  }, [animation]);
+  }, [animation, settings]);
   return <div className={className} ref={containerRef} />;
 };
 

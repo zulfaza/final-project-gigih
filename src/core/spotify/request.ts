@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import Api from 'components/Api';
+import { userType } from 'core/redux/spotify';
 
 function getAxiosConfig() {
   const accessTokenRedux = localStorage.getItem('accessToken');
@@ -42,6 +43,50 @@ const getSavedTrack = () => {
   };
   return Api.get('/me/player/recently-played', config);
 };
+const createPlaylist = ({
+  body,
+}: {
+  body: {
+    name: string;
+    description: string;
+  };
+}) => {
+  const userStr = localStorage.getItem('userData');
+  if (!userStr) throw new Error('Missing userData');
+
+  const user: userType = JSON.parse(userStr);
+
+  const config = getAxiosConfig();
+  return Api.post(
+    `/users/${user.id}/playlists`,
+    {
+      ...body,
+      public: false,
+      collaborative: false,
+    },
+    config
+  );
+};
+
+const addToPlaylist = ({
+  body,
+  playlistId,
+}: {
+  body: {
+    uris: string[];
+  };
+  playlistId: string;
+}) => {
+  const config = getAxiosConfig();
+
+  return Api.post(
+    `/playlists/${playlistId}/tracks`,
+    {
+      uris: body.uris,
+    },
+    config
+  );
+};
 
 const getTracks = (ids: string, market: string = 'ID') => {
   const config = getAxiosConfig();
@@ -52,4 +97,11 @@ const getTracks = (ids: string, market: string = 'ID') => {
   return Api.get('/tracks', config);
 };
 
-export { handleSearchTrack, getUserInfo, getTracks, getSavedTrack };
+export {
+  handleSearchTrack,
+  getUserInfo,
+  getTracks,
+  getSavedTrack,
+  createPlaylist,
+  addToPlaylist,
+};

@@ -94,8 +94,6 @@ const _updateUser: CaseReducer<reducerState, PayloadAction<userType>> = (
   state,
   action
 ) => {
-  console.log('update user');
-
   const newState = { ...state, user: action.payload };
   localStorage.setItem('userData', JSON.stringify(action.payload));
   return newState;
