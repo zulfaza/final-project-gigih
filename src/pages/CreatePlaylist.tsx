@@ -63,7 +63,7 @@ const CreatePlaylist = () => {
             ...res.data.tracks.map((track: Track) => ({
               title: track.name,
               thumbnail:
-                track.album.images[0].url ??
+                track.album.images[0]?.url ??
                 `https://avatars.dicebear.com/api/identicon/${track.id}.svg`,
               duration: track.duration_ms,
               preview: track.preview_url,
