@@ -6,6 +6,7 @@ import {
   changePlaylistDetail,
   changePlaylistItem,
   getPlaylist,
+  unfollowPlaylist,
 } from 'core/spotify/request';
 import { PlaylistType } from 'pages/ListPlaylist';
 import React, { Fragment, useEffect, useState } from 'react';
@@ -135,7 +136,7 @@ const Modal = ({ setType, isShow, playlistId, type, setPlaylists }: Props) => {
   const [Success, setSuccess] = useState('');
 
   useEffect(() => {
-    if (playlistId)
+    if (playlistId && type === 'edit')
       getPlaylist(playlistId).then((res) => {
         const playlist: PlaylistTypeApi = res.data;
         setTitle(playlist.name);
@@ -156,7 +157,8 @@ const Modal = ({ setType, isShow, playlistId, type, setPlaylists }: Props) => {
         );
         setLoadingDataPlaylist(false);
       });
-  }, [playlistId]);
+    else setLoadingDataPlaylist(false);
+  }, [playlistId, type]);
 
   const handleEditDetailSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -233,6 +235,27 @@ const Modal = ({ setType, isShow, playlistId, type, setPlaylists }: Props) => {
       });
   };
 
+  const handleDeletePlaylist = () => {
+    setLoadingSubmit(true);
+    setSuccess('');
+    if (!playlistId) {
+      setLoadingSubmit(false);
+      setType(null);
+      return;
+    }
+    unfollowPlaylist(playlistId)
+      .then(() => {
+        setPlaylists((prev) =>
+          prev.filter((playlist) => playlist.id !== playlistId)
+        );
+        setType(null);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setLoadingSubmit(false);
+      });
+  };
+
   return (
     <Transition appear show={isShow} as={Fragment}>
       <Dialog
@@ -279,6 +302,29 @@ const Modal = ({ setType, isShow, playlistId, type, setPlaylists }: Props) => {
               {LoadingDataPlaylist && (
                 <div className="flex-cc">
                   <ImSpinner8 className="animate-spin w-10 h-10 text-white" />
+                </div>
+              )}
+              {!LoadingDataPlaylist && type !== null && type === 'delete' && (
+                <div className="text-center flex-cc flex-col">
+                  <h4 className="text-white font-semibold text-2xl mb-5">
+                    Are you sure want to delete this playlist?
+                  </h4>
+                  <div className="flex-cc gap-4">
+                    <button
+                      disabled={LoadingSubmit}
+                      onClick={onClose}
+                      className="bg-accent disabled:opacity-50 hover:text-white hover:bg-transparent transition-colors px-6 py-2 rounded border border-accent text-dark-800"
+                    >
+                      No
+                    </button>
+                    <button
+                      disabled={LoadingSubmit}
+                      onClick={handleDeletePlaylist}
+                      className=" bg-transparent disabled:opacity-50 hover:text-dark-800 hover:bg-accent transition-colors px-6 py-2 rounded border border-accent text-gray-300"
+                    >
+                      Yes
+                    </button>
+                  </div>
                 </div>
               )}
               {!LoadingDataPlaylist && type !== null && type === 'edit' && (

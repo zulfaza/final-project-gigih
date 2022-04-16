@@ -131,9 +131,14 @@ const changePlaylistItem = (
   const config = getAxiosConfig();
   return Api.put(`/playlists/${playlistId}/tracks`, body, config);
 };
+const unfollowPlaylist = (playlistId: string) => {
+  const config = getAxiosConfig();
+  return Api.delete(`/playlists/${playlistId}/followers`, config);
+};
 
 export {
   changePlaylistItem,
+  unfollowPlaylist,
   handleSearchTrack,
   getUserInfo,
   getTracks,
