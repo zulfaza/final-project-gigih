@@ -1,6 +1,7 @@
 # Final Project Gigih
 
 [![](https://img.shields.io/badge/TYPESCRIPT%20-%233178C6.svg?&style=flat&logo=typescript&logoColor=white)](https://typescriptlang.org) [![](https://img.shields.io/badge/REACT%20-%2356BDDA.svg?&style=flat&logo=react&logoColor=white)](https://reactjs.org) [![](https://img.shields.io/badge/TAILWIND%20-%2338B2AC.svg?&style=flat&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+
 this is final project for [Program Gigih](https://www.anakbangsabisa.org/generasi-gigih/) using [react](https://reactjs.org)
 
 ## Installation
