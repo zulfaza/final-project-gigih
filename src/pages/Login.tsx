@@ -64,7 +64,7 @@ const Login = () => {
 
   const client_id = process.env.REACT_APP_CLIENT_ID;
   const scope =
-    'playlist-modify-private  user-read-private  user-read-email  user-read-recently-played';
+    'playlist-modify-private  user-read-private playlist-read-private  user-read-email  user-read-recently-played';
   const redirect_uri = process.env.REACT_APP_REDIRECT_URL;
 
   return (

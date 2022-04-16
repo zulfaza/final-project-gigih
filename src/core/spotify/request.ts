@@ -97,11 +97,50 @@ const getTracks = (ids: string, market = 'ID') => {
   return Api.get('/tracks', config);
 };
 
+const getCurrentUserPlaylists = () => {
+  const config = getAxiosConfig();
+  return Api.get('/me/playlists', config);
+};
+
+const getPlaylist = (playlistId: string) => {
+  const config = getAxiosConfig();
+  return Api.get(`/playlists/${playlistId}`, config);
+};
+
+type changePlaylistDetailBodyType = {
+  name: string;
+  description: string;
+  public: boolean;
+  collaborative: boolean;
+};
+
+const changePlaylistDetail = (
+  playlistId: string,
+  body: changePlaylistDetailBodyType
+) => {
+  const config = getAxiosConfig();
+  return Api.put(`/playlists/${playlistId}`, body, config);
+};
+
+const changePlaylistItem = (
+  playlistId: string,
+  body: {
+    uris: string[];
+  }
+) => {
+  const config = getAxiosConfig();
+  return Api.put(`/playlists/${playlistId}/tracks`, body, config);
+};
+
 export {
+  changePlaylistItem,
   handleSearchTrack,
   getUserInfo,
   getTracks,
   getSavedTrack,
   createPlaylist,
   addToPlaylist,
+  getCurrentUserPlaylists,
+  changePlaylistDetail,
+  getPlaylist,
 };

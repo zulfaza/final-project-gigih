@@ -7,6 +7,7 @@ import UserOnlyRoute from 'components/routes/UserOnlyRoute';
 import GuestOnlyRoute from 'components/routes/GuestOnlyRoute';
 import { Provider } from 'react-redux';
 import store from 'core/redux/store';
+import ListPlaylist from 'pages/ListPlaylist';
 
 function App() {
   return (
@@ -27,6 +28,14 @@ function App() {
               element={
                 <UserOnlyRoute>
                   <CreatePlaylist />
+                </UserOnlyRoute>
+              }
+            />
+            <Route
+              path="/me/playlists"
+              element={
+                <UserOnlyRoute>
+                  <ListPlaylist />
                 </UserOnlyRoute>
               }
             />

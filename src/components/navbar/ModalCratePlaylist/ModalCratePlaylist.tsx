@@ -1,11 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react';
-import Lottie from 'components/lottie';
-import { success } from 'components/lottie/animations';
 import { resetSelectedSongs } from 'core/redux/spotify';
 import { selectorProps } from 'core/redux/store';
 import { addToPlaylist, createPlaylist } from 'core/spotify/request';
 import React, { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import FormCreate from './FormCreate';
+import SuccessMessage from './SuccessMessage';
 
 type Props = {
   isOpen: boolean;
@@ -112,60 +112,14 @@ const ModalCratePlaylist = ({ setIsOpen, isOpen }: Props) => {
                 </div>
               )}
               {Success ? (
-                <div className="w-full flex-cc flex-col">
-                  <div className="flex-cc w-full">
-                    <Lottie
-                      settings={{ loop: false }}
-                      className="w-32 h-32"
-                      animation={success}
-                    />
-                  </div>
-                  <h2 className="text-white my-4 text-center">
-                    Success created playlist
-                  </h2>
-                  <button
-                    onClick={() => {
-                      setIsOpen(false);
-                      setSuccess(false);
-                    }}
-                    className="bg-accent disabled:opacity-75 px-2 py-2 rounded-md font-semibold w-full"
-                  >
-                    Close
-                  </button>
-                </div>
+                <SuccessMessage setIsOpen={setIsOpen} setSuccess={setSuccess} />
               ) : (
-                <form onSubmit={handleSubmit}>
-                  <div className="flex flex-col mb-3">
-                    <label className="text-gray-300 mb-2" htmlFor="title">
-                      Title
-                    </label>
-                    <input
-                      className=" bg-transparent text-white border focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent "
-                      type="text"
-                      name="title"
-                      id="title"
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-                  </div>
-                  <div className="flex flex-col mb-3">
-                    <label className="text-gray-300 mb-2" htmlFor="description">
-                      Description
-                    </label>
-                    <textarea
-                      rows={7}
-                      className=" bg-transparent text-white border focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent "
-                      name="description"
-                      id="description"
-                      onChange={(e) => setDesccription(e.target.value)}
-                    />
-                  </div>
-                  <button
-                    disabled={Loading}
-                    className="bg-accent disabled:opacity-75 px-2 py-2 rounded-md font-semibold w-full"
-                  >
-                    Create
-                  </button>
-                </form>
+                <FormCreate
+                  handleSubmit={handleSubmit}
+                  setTitle={setTitle}
+                  setDesccription={setDesccription}
+                  Loading={Loading}
+                />
               )}
             </div>
           </Transition.Child>

@@ -12,8 +12,8 @@ const Links = [
     icon: <BsHouse />,
   },
   {
-    label: 'List Playlist',
-    href: '/list-playlist',
+    label: 'My Playlist',
+    href: '/me/playlists',
     icon: <BsList />,
   },
 ];

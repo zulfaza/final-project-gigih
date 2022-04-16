@@ -2,10 +2,10 @@ import { Disclosure } from '@headlessui/react';
 import { toggleSelectedSong } from 'core/redux/spotify';
 import { selectorProps } from 'core/redux/store';
 import React from 'react';
-import { BsPlusCircle, BsX } from 'react-icons/bs';
+import { BsPlusCircle } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { msToFormatedDuration } from 'utils/converter';
+import SelectedTrackItem from './SelectedTrackItem';
 
 type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,10 +13,11 @@ type Props = {
 
 const PlaylistCartButton = ({ setIsOpen }: Props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const selectedTrack = useSelector(
     (state: selectorProps) => state.spotify.selectedSongs
   );
-  const dispatch = useDispatch();
+
   return (
     <Disclosure as={'div'} className="">
       <Disclosure.Button
@@ -37,26 +38,11 @@ const PlaylistCartButton = ({ setIsOpen }: Props) => {
         {({ close }) => (
           <>
             {selectedTrack.map((track) => (
-              <div key={track.uri} className="mb-4 flex-bc w-full">
-                <div className="flex-sc gap-3 flex-grow-0 flex-shrink w-4/5 ">
-                  <img
-                    className="w-10 h-10 flex-shrink-0 overflow-hidden rounded-md"
-                    src={track.thumbnail}
-                    alt={track.title}
-                  />
-                  <div className="flex-grow-0 truncate">
-                    <h4 className="text-white text-sm mb-1">{track.title}</h4>
-                    <h5 className="text-white text-opacity-70 text-xs">
-                      {msToFormatedDuration(track.duration)}
-                    </h5>
-                  </div>
-                </div>
-                <div className="block">
-                  <button onClick={() => dispatch(toggleSelectedSong(track))}>
-                    <BsX className="text-white w-6 h-6" />
-                  </button>
-                </div>
-              </div>
+              <SelectedTrackItem
+                track={track}
+                handleDelete={() => dispatch(toggleSelectedSong(track))}
+                key={track.uri}
+              />
             ))}
             {selectedTrack.length > 0 ? (
               <button

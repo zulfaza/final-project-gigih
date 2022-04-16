@@ -110,7 +110,7 @@ const CreatePlaylist = () => {
         <div>
           {LoadingTrack && Keyword && (
             <div className="flex-cc">
-              <ImSpinner8 className="animate-spin w-10 h-10 text-white" />{' '}
+              <ImSpinner8 className="animate-spin w-10 h-10 text-white" />
             </div>
           )}
         </div>
