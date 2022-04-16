@@ -1,8 +1,8 @@
-function formatParameter(data: any) {
+function formatParameter(data: { [key: string]: any }) {
   const newObject = { ...data };
   return Object.keys(newObject)
     .map((key) => `${key}=${newObject[key]}`)
-    .join("&");
+    .join('&');
 }
 
 export default formatParameter;

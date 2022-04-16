@@ -19,22 +19,22 @@ const TrackItem = ({ track }: Props) => {
   const [Loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const onEnded = (e: Event) => {
+    const onEnded = () => {
       setIsPlay(false);
     };
 
-    const onLoaded = (e: Event) => {
+    const onLoaded = () => {
       setLoading(false);
     };
 
-    const onWaiting = (e: Event) => {
+    const onWaiting = () => {
       setLoading(true);
     };
 
-    const onPlay = (e: Event) => {
+    const onPlay = () => {
       setIsPlay(true);
     };
-    const onPause = (e: Event) => {
+    const onPause = () => {
       setIsPlay(false);
     };
 

@@ -4,7 +4,7 @@ import { success } from 'components/lottie/animations';
 import { resetSelectedSongs } from 'core/redux/spotify';
 import { selectorProps } from 'core/redux/store';
 import { addToPlaylist, createPlaylist } from 'core/spotify/request';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 type Props = {

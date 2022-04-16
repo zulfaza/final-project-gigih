@@ -25,10 +25,10 @@ const CreatePlaylist = () => {
     Offset
   );
 
-  const Observer = useRef<any>(null);
+  const Observer = useRef<IntersectionObserver | null>(null);
 
   const LastTrackRef = useCallback(
-    (node: any) => {
+    (node: HTMLDivElement | null) => {
       if (LoadingTrack) return;
       if (Observer.current) Observer.current.disconnect();
       Observer.current = new IntersectionObserver((entries) => {
@@ -47,9 +47,15 @@ const CreatePlaylist = () => {
 
   useEffect(() => {
     getSavedTrack()
-      .then((res) =>
-        getTracks(res.data.items.map((data: any) => data.track.id).join(','))
-      )
+      .then((res) => {
+        console.log(res);
+
+        return getTracks(
+          res.data.items
+            .map(({ track }: { track: Track }) => track.id)
+            .join(',')
+        );
+      })
       .then((res) =>
         setDefaultTracks([
           ...res.data.tracks.map((track: Track) => ({

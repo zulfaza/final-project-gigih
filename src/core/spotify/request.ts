@@ -88,7 +88,7 @@ const addToPlaylist = ({
   );
 };
 
-const getTracks = (ids: string, market: string = 'ID') => {
+const getTracks = (ids: string, market = 'ID') => {
   const config = getAxiosConfig();
   config.params = {
     market,

@@ -9,8 +9,8 @@ type Props = {
 };
 
 const SideLink = ({ href, label, icon }: Props) => {
-  let resolved = useResolvedPath(href);
-  let match = useMatch({ path: resolved.pathname, end: true });
+  const resolved = useResolvedPath(href);
+  const match = useMatch({ path: resolved.pathname, end: true });
   return (
     <li className="mb-2">
       <Link
