@@ -144,7 +144,9 @@ const Modal = ({ setType, isShow, playlistId, type, setPlaylists }: Props) => {
         setTracks(
           playlist.tracks.items.map(({ track }) => ({
             title: track.name,
-            thumbnail: track.album.images[0].url,
+            thumbnail:
+              track.album.images[0].url ??
+              `https://avatars.dicebear.com/api/identicon/${track.id}.svg`,
             duration: track.duration_ms,
             preview: track.preview_url,
             uri: track.uri,

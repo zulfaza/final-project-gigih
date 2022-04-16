@@ -100,7 +100,10 @@ const ListPlaylist = () => {
                 <div className="flex w-full gap-5">
                   <img
                     className="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden object-cover"
-                    src={playlist.images[0].url}
+                    src={
+                      playlist.images[0].url ??
+                      `https://avatars.dicebear.com/api/identicon/${playlist.id}.svg`
+                    }
                     alt={playlist.name}
                   />
                   <div className="flex-grow-0 flex overflow-hidden flex-col">

@@ -20,7 +20,10 @@ const ProfileDropdown = ({ userNavigation }: Props) => {
           <span className="sr-only">Open user menu</span>
           <img
             className="h-8 w-8 rounded-full"
-            src={user.images[0].url}
+            src={
+              user.images[0]?.url ??
+              `https://avatars.dicebear.com/api/pixel-art-neutral/${user.id}.svg`
+            }
             alt=""
           />
         </Menu.Button>
