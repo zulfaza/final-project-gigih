@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Login from 'pages/Login';
+import 'jest-canvas-mock';
 
 test('if user can login', async () => {
   render(<Login />);
