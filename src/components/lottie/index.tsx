@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import lottie from 'lottie-web';
-import { randonString } from 'utils/make';
+import { randomString } from 'utils/make';
 
 const Lottie = ({
   animation,
@@ -18,7 +18,7 @@ const Lottie = ({
 }) => {
   const containerRef = useRef(null);
   useEffect(() => {
-    const name = randonString();
+    const name = randomString();
     if (containerRef.current) {
       lottie.loadAnimation({
         container: containerRef.current,

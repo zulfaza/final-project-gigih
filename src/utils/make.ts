@@ -1,4 +1,4 @@
-function randonString(length = 10) {
+function randomString(length = 10) {
   let result = '';
   const characters =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -9,4 +9,8 @@ function randonString(length = 10) {
   return result;
 }
 
-export { randonString };
+function randomInt(max: number): number {
+  return Math.floor(Math.random() * max);
+}
+
+export { randomString, randomInt };
