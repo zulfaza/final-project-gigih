@@ -4,6 +4,7 @@ import { userType } from 'core/redux/spotify';
 
 function getAxiosConfig() {
   const accessTokenRedux = localStorage.getItem('accessToken');
+
   const Authorization = `Bearer ${accessTokenRedux}`;
   const config: AxiosRequestConfig = {
     headers: {

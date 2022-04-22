@@ -39,7 +39,7 @@ const MenuPlaylist = ({ links, playlist }: Props) => {
         <Menu.Items className="origin-top-right absolute right-0 mt-2 rounded-md shadow-lg py-1 bg-dark-800 bg-opacity-50 ring-1 ring-black ring-opacity-5 focus:outline-none">
           {links
             .filter(
-              (item) => playlist.owner.id == user.id || item.name === 'Delete'
+              (item) => playlist.owner.id === user.id || item.name === 'Delete'
             )
             .map((item) => (
               <Menu.Item key={item.name}>

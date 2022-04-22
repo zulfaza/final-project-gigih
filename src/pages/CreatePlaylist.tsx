@@ -56,9 +56,8 @@ const CreatePlaylist = () => {
             .join(',')
         );
       })
-      .then(
-        (res) =>
-          res &&
+      .then((res) => {
+        if (res && res.data.tracks)
           setDefaultTracks([
             ...res.data.tracks.map((track: Track) => ({
               title: track.name,
@@ -74,10 +73,7 @@ const CreatePlaylist = () => {
                 url: artist.external_urls.spotify,
               })),
             })),
-          ])
-      )
-      .catch((err) => {
-        console.log(err.response.data);
+          ]);
       });
   }, []);
 
@@ -103,6 +99,7 @@ const CreatePlaylist = () => {
             className="border-2 border-gray-300 bg-white w-full px-5 pr-16 rounded-lg text-sm focus:outline-none"
             type="search"
             name="search"
+            data-testid="searchForm"
             placeholder="Search"
             onChange={handleChnageKeyword}
           />
@@ -113,7 +110,7 @@ const CreatePlaylist = () => {
         <div>{Error && <div className="w-full">{Error}</div>}</div>
         <div>
           {LoadingTrack && Keyword && (
-            <div className="flex-cc">
+            <div data-testid="loading" className="flex-cc">
               <ImSpinner8 className="animate-spin w-10 h-10 text-white" />
             </div>
           )}

@@ -1,0 +1,22 @@
+{
+  "country": "ID",
+  "display_name": "John Doe",
+  "email": "bukan@gmail.com",
+  "explicit_content": { "filter_enabled": false, "filter_locked": false },
+  "external_urls": {
+    "spotify": "https://open.spotify.com/user/sakdjkaldjklajdklajdkaljl"
+  },
+  "followers": { "href": null, "total": 4 },
+  "href": "https://api.spotify.com/v1/users/sakdjkaldjklajdklajdkaljl",
+  "id": "sakdjkaldjklajdklajdkaljl",
+  "images": [
+    {
+      "height": null,
+      "url": "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1294155947346668&height=300&width=300&ext=1653105288&hash=AeSZ91rwoiEQFA8c_m0",
+      "width": null
+    }
+  ],
+  "product": "premium",
+  "type": "user",
+  "uri": "spotify:user:sakdjkaldjklajdklajdkaljl"
+}

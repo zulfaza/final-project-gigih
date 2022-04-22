@@ -67,7 +67,10 @@ const TrackItem = ({ track }: Props) => {
   };
 
   return (
-    <div className="flex h-full flex-col p-5 group rounded-xl hover:bg-dark-600 hover:bg-opacity-70 transition-colors bg-dark-700 ">
+    <div
+      data-testid="track-item"
+      className="flex h-full flex-col p-5 group rounded-xl hover:bg-dark-600 hover:bg-opacity-70 transition-colors bg-dark-700 "
+    >
       <audio src={track.preview} ref={AudioRef}></audio>
       <div className="relative z-0 w-full  aspect-w-1 aspect-h-1 bg-dark-600 rounded-2xl overflow-hidden">
         <div className=" bg-gray-600 w-full h-full animate-pulse inset-0 absolute"></div>
